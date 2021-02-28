@@ -30,7 +30,9 @@ namespace Booky.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // if OnModelCreating exists in the context this statement is mandatory to have, otherwise identity schema migration fails.
             base.OnModelCreating(modelBuilder);
+
             // configuring Fluent API
 
             // set a table name using Fluent API

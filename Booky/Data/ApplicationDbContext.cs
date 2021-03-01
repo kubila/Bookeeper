@@ -1,4 +1,5 @@
-﻿using Booky.Models;
+﻿using Booky.Config;
+using Booky.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -32,6 +33,8 @@ namespace Booky.Data
         {
             // if OnModelCreating exists in the context this statement is mandatory to have, otherwise identity schema migration fails.
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
 
             // configuring Fluent API
 

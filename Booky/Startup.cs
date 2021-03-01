@@ -1,4 +1,6 @@
+using Booky.Contracts;
 using Booky.Data;
+using Booky.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +35,8 @@ namespace Booky
                 options.UseSqlServer(
                     Configuration.GetConnectionString("Default")));
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddDefaultIdentity<IdentityUser>()                
                 .AddEntityFrameworkStores<ApplicationDbContext>();

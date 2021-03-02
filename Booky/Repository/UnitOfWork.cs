@@ -12,8 +12,6 @@ namespace Booky.Repository
     {
         private readonly ApplicationDbContext _context;
 
-        private IRepositoryBase<BookDetail> _bookDetails;
-
         private IRepositoryBase<Category> _categories;
 
         private IRepositoryBase<Genre> _genres;
@@ -25,13 +23,14 @@ namespace Booky.Repository
             _context = context;
             Authors = new AuthorRepository(_context);
             Books = new BookRepository(_context);
+            BookDetails = new BookDetailRepository(_context);
         }
 
         public IAuthorRepository Authors { get; }
 
         public IBookRepository Books { get; }
 
-        public IBookDetailRepository BookDetails => throw new NotImplementedException();
+        public IBookDetailRepository BookDetails { get; }
 
         public ICategoryRepository Categories => throw new NotImplementedException();
 

@@ -8,17 +8,17 @@ namespace Booky.Contracts
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepositoryBase<Author> Authors { get; }
+        IAuthorRepository Authors { get; }
 
-        IRepositoryBase<Book> Books { get; }
+        IBookRepository Books { get; }
 
-        IRepositoryBase<BookDetail> BookDetails { get; }
+        IBookDetailRepository BookDetails { get; }
 
-        IRepositoryBase<Category> Categories { get; }
+        ICategoryRepository Categories { get; }
 
-        IRepositoryBase<Genre> Genres { get; }
+        IGenreRepository Genres { get; }
 
-        IRepositoryBase<Publisher> Publishers { get; }
+        IPublisherRepository Publishers { get; }
 
         Task Save();
     }

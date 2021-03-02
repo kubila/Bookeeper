@@ -12,8 +12,6 @@ namespace Booky.Repository
     {
         private readonly ApplicationDbContext _context;
 
-        private IRepositoryBase<Author> _authors;
-
         private IRepositoryBase<Book> _books;
 
         private IRepositoryBase<BookDetail> _bookDetails;
@@ -27,26 +25,28 @@ namespace Booky.Repository
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
+            Authors = new AuthorRepository(_context);            
         }
 
+        public IAuthorRepository Authors { get; }
 
-        public IRepositoryBase<Author> Authors => _authors ??= new RepositoryBase<Author>(_context);
+        public IBookRepository Books => throw new NotImplementedException();
 
-        public IRepositoryBase<Book> Books => _books ??= new RepositoryBase<Book>(_context);
+        public IBookDetailRepository BookDetails => throw new NotImplementedException();
 
-        public IRepositoryBase<BookDetail> BookDetails => _bookDetails ??= new RepositoryBase<BookDetail>(_context);
+        public ICategoryRepository Categories => throw new NotImplementedException();
 
-        public IRepositoryBase<Category> Categories => _categories ??= new RepositoryBase<Category>(_context);
+        public IGenreRepository Genres => throw new NotImplementedException();
 
-        public IRepositoryBase<Genre> Genres => _genres ??= new RepositoryBase<Genre>(_context);
+        public IPublisherRepository Publishers => throw new NotImplementedException();
 
-        public IRepositoryBase<Publisher> Publishers => _publishers ??= new RepositoryBase<Publisher>(_context);
 
         public void Dispose()
         {
             _context.Dispose();
             GC.SuppressFinalize(this);
         }
+
 
         public async Task Save()
         {

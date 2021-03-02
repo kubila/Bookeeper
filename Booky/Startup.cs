@@ -38,14 +38,17 @@ namespace Booky
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-            services.AddDefaultIdentity<IdentityUser>()                
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            var policy = new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .Build();
+            //services.AddControllersWithViews();            
+            
             services.AddControllersWithViews(options =>
             {
+                var policy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()                
+                .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
         }

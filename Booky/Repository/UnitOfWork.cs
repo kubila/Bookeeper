@@ -12,12 +12,6 @@ namespace Booky.Repository
     {
         private readonly ApplicationDbContext _context;
 
-        private IRepositoryBase<Category> _categories;
-
-        private IRepositoryBase<Genre> _genres;
-
-        private IRepositoryBase<Publisher> _publishers;
-
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
@@ -26,6 +20,7 @@ namespace Booky.Repository
             BookDetails = new BookDetailRepository(_context);
             Categories = new CategoryRepository(_context);
             Genres = new GenreRepository(_context);
+            Publishers = new PublisherRepository(_context);
         }
 
         public IAuthorRepository Authors { get; }
@@ -38,7 +33,7 @@ namespace Booky.Repository
 
         public IGenreRepository Genres { get; }
 
-        public IPublisherRepository Publishers => throw new NotImplementedException();
+        public IPublisherRepository Publishers { get; }
 
 
         public void Dispose()
@@ -49,8 +44,8 @@ namespace Booky.Repository
 
 
         public async Task Save()
-        {
-            await _context.SaveChangesAsync();
+        {          
+            await _context.SaveChangesAsync();            
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using Booky.Data;
+﻿using Booky.Contracts;
+using Booky.Data;
 using Booky.Models;
+using Booky.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,22 +15,25 @@ namespace Booky.Controllers
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryController(ApplicationDbContext context)
+        public CategoryController(ApplicationDbContext context, IUnitOfWork unitOfWork)
         {
             _db = context;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: CategoryController
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Category> catList = _db.Categories.ToList();
+            //List<Category> catList = _db.Categories.ToList();
+            var catList = await _unitOfWork.Categories.FindAll();
 
             return View(catList);
         }
 
         // performs both Insert and Update operations
-        public IActionResult UpSert(int? id)
+        public async Task<IActionResult> UpSert(int? id)
         {
             Category obj = new Category();
 
@@ -37,9 +42,11 @@ namespace Booky.Controllers
                 return View(obj);
             }
 
-            obj = _db.Categories.FirstOrDefault(c => c.Category_Id == id);
+            var creating = await _unitOfWork.Categories.isExists(c => c.Category_Id == id);
 
-            if(obj == null)
+            //obj = _db.Categories.FirstOrDefault(c => c.Category_Id == id);
+
+            if( !creating )
             {
                 return NotFound();
             }

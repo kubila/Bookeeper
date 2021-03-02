@@ -1,4 +1,4 @@
-﻿using Booky.Config;
+﻿using Booky.Configurations;
 using Booky.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

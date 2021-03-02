@@ -32,7 +32,7 @@ namespace Booky.Repository
 
         public IBookDetailRepository BookDetails { get; }
 
-        public ICategoryRepository Categories => throw new NotImplementedException();
+        public ICategoryRepository Categories { get; }
 
         public IGenreRepository Genres => throw new NotImplementedException();
 

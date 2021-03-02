@@ -24,6 +24,8 @@ namespace Booky.Repository
             Authors = new AuthorRepository(_context);
             Books = new BookRepository(_context);
             BookDetails = new BookDetailRepository(_context);
+            Categories = new CategoryRepository(_context);
+            Genres = new GenreRepository(_context);
         }
 
         public IAuthorRepository Authors { get; }
@@ -34,7 +36,7 @@ namespace Booky.Repository
 
         public ICategoryRepository Categories { get; }
 
-        public IGenreRepository Genres => throw new NotImplementedException();
+        public IGenreRepository Genres { get; }
 
         public IPublisherRepository Publishers => throw new NotImplementedException();
 

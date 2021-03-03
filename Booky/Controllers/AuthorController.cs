@@ -1,4 +1,5 @@
-﻿using Booky.Data;
+﻿using Booky.Contracts;
+using Booky.Data;
 using Booky.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,24 +14,25 @@ namespace Booky.Controllers
     public class AuthorController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AuthorController(ApplicationDbContext context)
+        public AuthorController(ApplicationDbContext context, IUnitOfWork unitOfWork)
         {
             _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: AuthorController
         public async Task<IActionResult> Index()
         {
-            List<Author> authorList = await _context.Authors.ToListAsync();
-            
-            return View(authorList);
+            var authors = await _unitOfWork.Authors.FindAll();
+            return View(authors);
         }
 
         // GET: AuthorController/Details/5
         public async Task<IActionResult> Details(int id)
-        {
-            var author = await _context.Authors.FirstOrDefaultAsync(c => c.Author_Id == id);
+        {            
+            var author = await _unitOfWork.Authors.Find(a => a.Author_Id == id);
             return View(author);
         }
 
@@ -42,8 +44,9 @@ namespace Booky.Controllers
 
             if ( id == null ) return View(author);
 
-            author = await _context.Authors.FirstOrDefaultAsync(c => c.Author_Id == id);
+            //author = await _context.Authors.FirstOrDefaultAsync(c => c.Author_Id == id);
 
+            author = await _unitOfWork.Authors.Find(a => a.Author_Id == id);
             if ( author == null ) return NotFound();
 
             return View(author);
@@ -61,14 +64,14 @@ namespace Booky.Controllers
                 if (author.Author_Id == 0 )
                 {
                     // create
-                    _context.Authors.Add(author);
+                    _unitOfWork.Authors.Create(author);                    
                 } else
                 {
                     // update
-                   _context.Authors.Update(author);
+                    _unitOfWork.Authors.Update(author);
                 }
-                
-                await _context.SaveChangesAsync();
+
+                await _unitOfWork.Save();
                 return RedirectToAction(nameof(Index));
             }
 
@@ -81,9 +84,9 @@ namespace Booky.Controllers
         {
             try
             {
-                var author = await _context.Authors.FirstOrDefaultAsync(c => c.Author_Id == id);
-                _context.Authors.Remove(author);
-                await _context.SaveChangesAsync();
+                var author = await _unitOfWork.Authors.Find(a => a.Author_Id == id);
+                _unitOfWork.Authors.Delete(author);
+                await _unitOfWork.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch

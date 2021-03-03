@@ -37,9 +37,7 @@ namespace Booky.Repository
                 }
             }
 
-            return await query.AsNoTracking().SingleOrDefaultAsync(); 
-
-
+            return await query.AsNoTracking().SingleOrDefaultAsync();
         }
 
         public async Task<IList<T>> FindAll(Expression<Func<T, bool>> expression = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<string> includes = null)

@@ -18,11 +18,6 @@ namespace Booky.Repository
         {
             _context = context;
             _db = _context.Set<T>();
-        }
-
-        public async Task Create(T entity)
-        {
-            await _db.AddAsync(entity);
         }        
 
         public async Task<T> Find(Expression<Func<T, bool>> expression, List<string> includes = null)
@@ -77,6 +72,16 @@ namespace Booky.Repository
             return await _db.AnyAsync(expression);
         }
 
+        public void AddRange(IEnumerable<T> entities)
+        {
+            _db.AddRange(entities);
+        }
+
+        public void Create(T entity)
+        {
+            _db.Add(entity);
+        }
+
         public void Delete(T entity)
         {
             _db.Remove(entity);
@@ -85,6 +90,11 @@ namespace Booky.Repository
         public void Update(T entity)
         {
             _db.Update(entity);
+        }
+
+        public void RemoveRange(IEnumerable<T> entites)
+        {
+            _db.RemoveRange(entites);
         }
     }
 }

@@ -16,7 +16,10 @@ namespace Booky.Contracts
 
         Task<T> Find(Expression<Func<T, bool>> expression, List<string> includes = null);
         Task<bool> isExists(Expression<Func<T, bool>> expression = null);
-        Task Create(T entity);
+
+        void AddRange(IEnumerable<T> entities);
+        void RemoveRange(IEnumerable<T> entites);
+        void Create(T entity);
         void Update(T entity);
         void Delete(T entity);
     }

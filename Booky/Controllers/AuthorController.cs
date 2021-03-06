@@ -10,15 +10,13 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Booky.Controllers
-{
+{    
     public class AuthorController : Controller
-    {
-        private readonly ApplicationDbContext _context;
+    {      
         private readonly IUnitOfWork _unitOfWork;
 
-        public AuthorController(ApplicationDbContext context, IUnitOfWork unitOfWork)
-        {
-            _context = context;
+        public AuthorController(IUnitOfWork unitOfWork)
+        {           
             _unitOfWork = unitOfWork;
         }
 
@@ -37,14 +35,13 @@ namespace Booky.Controllers
         }
 
         // GET: AuthorController/UpSert
+        //[HttpGet("/authors/upsert/{id:int}")]
         public async Task<IActionResult> UpSert(int? id)
         {
 
             var author = new Author();
 
             if ( id == null ) return View(author);
-
-            //author = await _context.Authors.FirstOrDefaultAsync(c => c.Author_Id == id);
 
             author = await _unitOfWork.Authors.Find(a => a.Author_Id == id);
             if ( author == null ) return NotFound();
@@ -54,7 +51,7 @@ namespace Booky.Controllers
         }
 
         // POST: AuthorController/UpSert
-        [HttpPost]
+        //[HttpPost("/authors/upsert/{}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpSert(Author author, int? id)
         {

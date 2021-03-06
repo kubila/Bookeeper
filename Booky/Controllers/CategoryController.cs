@@ -13,20 +13,17 @@ using System.Threading.Tasks;
 namespace Booky.Controllers
 {    
     public class CategoryController : Controller
-    {
-        private readonly ApplicationDbContext _db;
+    {        
         private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryController(ApplicationDbContext context, IUnitOfWork unitOfWork)
-        {
-            _db = context;
+        public CategoryController(IUnitOfWork unitOfWork)
+        {          
             _unitOfWork = unitOfWork;
         }
 
         // GET: CategoryController
         public async Task<IActionResult> Index()
-        {
-            //List<Category> catList = _db.Categories.ToList();
+        {            
             var catList = await _unitOfWork.Categories.FindAll();
 
             return View(catList);

@@ -1,6 +1,7 @@
 ﻿using Booky.Contracts;
 using Booky.Data;
 using Booky.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Booky.Controllers
-{    
+{        
     public class AuthorController : Controller
     {      
         private readonly IUnitOfWork _unitOfWork;

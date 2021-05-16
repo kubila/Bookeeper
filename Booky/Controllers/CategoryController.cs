@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Booky.Controllers
-{    
+{       
     public class CategoryController : Controller
     {        
         private readonly IUnitOfWork _unitOfWork;

@@ -1,5 +1,7 @@
+using AutoMapper;
 using Booky.Contracts;
 using Booky.Data;
+using Booky.Mappings;
 using Booky.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -37,7 +39,7 @@ namespace Booky
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-
+            services.AddAutoMapper(typeof(MapsThings));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
